@@ -47,7 +47,7 @@ def main(rep='vip'):
     colors = {'vip': 'tab:blue', 'resnet': 'tab:orange', 'r3m':'tab:red'}
    
     os.makedirs('embedding_curves', exist_ok=True)
-    videos = glob.glob("demo_adroit/*")
+    videos = glob.glob("strawb/*")
     # videos = glob.glob("demo_realrobot/*")
     # videos = glob.glob("demo_frankakitchen/*")
     for video_id, vid in enumerate(videos):
@@ -73,9 +73,10 @@ def main(rep='vip'):
         imgs_cur = torch.stack(imgs_cur)
         if rep in ['vip', 'r3m']:
             imgs_cur = imgs_cur * 255
-        imgs_cur = imgs_cur[:60] # truncate some videos that have loops
+        imgs_cur = imgs_cur[:200] # truncate some videos that have loops
         with torch.no_grad():
             embeddings = model(imgs_cur.cuda())
+            print(f"embedding shape: {embeddings.shape}")
             embeddings = embeddings.cpu().numpy()
 
         # get goal embedding

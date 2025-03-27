@@ -1,0 +1,39 @@
+defaults:
+  - _self_
+  - override hydra/launcher:  local
+  - override hydra/output:  local
+
+# snapshot
+save_snapshot: true
+load_snap: ""
+
+# replay buffer
+num_workers: 4
+batch_size: 16
+train_steps: 10001
+eval_freq: 500
+
+# misc
+seed: 1
+device: cuda
+
+# experiment
+experiment: train_vip
+wandbuser: 
+wandbproject: 
+
+# data
+dataset: strawb_sim
+datapath: /home/emlyn/datasets/strawb_sim/success/train/robot/
+val_datapath: /home/emlyn/datasets/strawb_sim/success/valid/robot/
+doaug: "rctraj"
+
+agent:
+  _target_: vip.VIP
+  device: ${device}
+  lr: 1e-6
+  hidden_dim: 1024
+  size: 50
+  l2weight: 0.0
+  l1weight: 0.0
+  num_negatives: 3
